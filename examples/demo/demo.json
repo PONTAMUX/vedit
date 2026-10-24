@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "source": "bg.mp4",
+  "timebase": "source",
+  "audio": {
+    "chain": [
+      {
+        "type": "declick",
+        "params": {
+          "threshold": 8
+        }
+      },
+      {
+        "type": "gain",
+        "db": 18
+      },
+      {
+        "type": "normalize",
+        "peak_db": -3
+      }
+    ]
+  },
+  "cuts": [
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      14,
+      17.043
+    ],
+    [
+      17.043,
+      22.691
+    ]
+  ],
+  "telops": [
+    {
+      "start": 0,
+      "end": 3,
+      "text": "テロップ"
+    },
+    {
+      "start": 3,
+      "end": 8,
+      "text": "テロップのテスト",
+      "anim": "pop"
+    },
+    {
+      "start": 9,
+      "end": 14,
+      "text": "二行目の\nテロップ",
+      "anim": "fade"
+    }
+  ],
+  "topics": [
+    {
+      "start": 0,
+      "end": 10,
+      "text": "トピック"
+    },
+    {
+      "start": 2,
+      "end": 14,
+      "text": "サンプルトピック"
+    }
+  ],
+  "overlays": [],
+  "cut_fx": {
+    "audio_fade_ms": 0,
+    "video": "dip-black",
+    "dur": 0.12
+  },
+  "bgm": {
+    "file": "bgm.wav",
+    "volume_db": -14,
+    "duck": false
+  },
+  "styles": {},
+  "output": {
+    "file": "out/final.mp4",
+    "fps": null
+  },
+  "splits": [
+    1.301
+  ]
+}

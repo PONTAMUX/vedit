@@ -1,0 +1,12 @@
+{
+  "doc": "絵(チャンピオンのカードなど)を大きく出して揺らし(pop)、消えるときはフェード + ニュッ",
+  "required": ["file"],
+  "params": {
+    "file": null, "gap_at": null, "pos": "full", "scale": null, "track": 6, "fade": 0.15,
+    "se": "se/ニュッ1.mp3", "se_gain": "match:ぽペン"
+  },
+  "items": [
+    {"to": "overlays", "item": {"file": "$file", "start": "$start", "end": "$end", "gap_at": "$gap_at", "pos": "$pos", "scale": "$scale", "track": "$track", "in_anim": "pop", "out_anim": {"type": "fade", "dur": "$fade"}}},
+    {"to": "sfx", "if": "se", "item": {"file": "$se", "start": "$start", "gap_at": "$gap_at", "gain_db": "$se_gain"}}
+  ]
+}

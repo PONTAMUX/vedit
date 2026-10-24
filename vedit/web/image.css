@@ -1,0 +1,46 @@
+/* 画像編集(image.html)用。色・部品は style.css の変数をそのまま使う */
+body.img #top{flex:none}
+#opts{flex:none;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:var(--p2);border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden}
+#opts .dim{margin-left:6px}
+#imain{flex:1;display:grid;grid-template-columns:44px 1fr 320px;min-height:0}
+#tools{display:flex;flex-direction:column;gap:4px;padding:6px 5px;background:var(--p);border-right:1px solid var(--line)}
+#tools button{width:34px;height:34px;padding:0;font-size:16px}
+#vp{position:relative;overflow:hidden;background:#101013;min-width:0}
+#cv{position:absolute;left:0;top:0;image-rendering:auto;box-shadow:0 0 0 1px var(--line);
+  background:repeating-conic-gradient(#3a3a40 0 25%,#2c2c31 0 50%) 0 0/16px 16px}
+#ov{position:absolute;inset:0;width:100%;height:100%}
+#tedit{position:absolute;z-index:5;background:rgba(0,0,0,.55);color:#fff;border:1px dashed var(--acc);border-radius:0;padding:2px;
+  resize:none;overflow:hidden;white-space:pre;min-height:0;outline:none}
+#drop{position:absolute;inset:12px;border:2px dashed var(--acc);border-radius:10px;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;font-size:18px;z-index:6;pointer-events:none}
+#drop[hidden],#tedit[hidden]{display:none}
+#side{border-left:1px solid var(--line)}
+#props{flex:1 1 55%;border-bottom:1px solid var(--line)}
+#layhd{flex:none;display:flex;align-items:center;gap:4px;padding:6px 8px;border-bottom:1px solid var(--line)}
+#layhd button{padding:2px 7px}
+#layers{flex:1 1 45%;overflow:auto;min-height:120px}
+.lay{display:flex;align-items:center;gap:6px;padding:5px 8px;border-bottom:1px solid var(--line);cursor:pointer}
+.lay:hover{background:#2a2a30}.lay.sel{background:#2b4a7a}
+.lay.drop-before{box-shadow:inset 0 2px 0 var(--acc)}.lay.drop-after{box-shadow:inset 0 -2px 0 var(--acc)}
+.lay .ic{width:18px;text-align:center;color:var(--dim)}
+.lay .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lay .nm input{width:100%}
+.lay .eye,.lay .lk{width:20px;text-align:center;cursor:pointer;opacity:.9}
+.lay .off{opacity:.25}
+.lay .noexp{color:#f5a524;font-size:11px}
+#status{flex:none;display:flex;gap:16px;align-items:center;height:24px;padding:0 12px;background:var(--p);border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+.seg{display:inline-flex}.seg button{border-radius:0;padding:3px 8px}.seg button:first-child{border-radius:5px 0 0 5px}.seg button:last-child{border-radius:0 5px 5px 0}
+.row .seg{flex:none}
+.row input[type=range]{flex:1}
+/* vimg 単独起動: ファイルメニュー・はじめの画面 */
+#filemenu{display:inline-flex;gap:4px;margin-left:6px}#filemenu[hidden]{display:none}
+#pname{color:var(--dim);margin-left:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+#modalbox.start{min-width:640px;max-width:760px}
+.start h2{margin:0 0 4px;font-size:20px}.start h2 .dim{font-size:13px;font-weight:normal;margin-left:8px}
+.start h4{margin:14px 0 6px}
+.start .presets{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.start .presets button{text-align:left;padding:7px 10px}.start .presets button small{display:block;color:var(--dim)}
+.start .row{display:flex;align-items:center;gap:6px;margin:6px 0}.start input[type=number]{width:84px}
+.start .files{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:6px}
+.start .files div{padding:5px 10px;cursor:pointer;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.start .files div:hover{background:var(--acc)}
+.start .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}

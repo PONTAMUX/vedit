@@ -1,0 +1,20 @@
+{
+  "doc": "強調: 文字(text)か絵(file)を pop で出す + 白いフラッシュ + 衝撃音(1→2→3 の順に回す)",
+  "required": [["text", "file"]],
+  "params": {
+    "text": null, "file": null, "gap_at": null,
+    "style": "impact", "pos": [0.5, 0.5], "track": 6, "out_anim": null,
+    "flash": true, "flash_dur": 0.14, "flash_track": 8,
+    "se": {"$pick": ["se/文字表示の衝撃音1.mp3", "se/文字表示の衝撃音2.mp3", "se/文字表示の衝撃音3.mp3"]},
+    "se_gain": "match:ぽペン"
+  },
+  "styles": {
+    "impact": {"font": "HGP明朝E", "size": 200, "color": "#E0201C", "outlines": [{"color": "#000000", "width": 17}, {"color": "#FFFFFF", "width": 6}]}
+  },
+  "items": [
+    {"to": "telops", "if": "text", "item": {"text": "$text", "start": "$start", "end": "$end", "gap_at": "$gap_at", "style": "$style", "pos": "$pos", "in_anim": "pop", "out_anim": "$out_anim"}},
+    {"to": "overlays", "if": "file", "item": {"file": "$file", "start": "$start", "end": "$end", "gap_at": "$gap_at", "pos": "full", "track": "$track", "in_anim": "pop", "out_anim": "$out_anim"}},
+    {"to": "overlays", "if": "flash", "item": {"kind": "flash", "start": "$start", "end": "$=start + flash_dur", "gap_at": "$gap_at", "track": "$flash_track", "params": {"dur": "$flash_dur"}}},
+    {"to": "sfx", "if": "se", "item": {"file": "$se", "start": "$start", "gap_at": "$gap_at", "gain_db": "$se_gain"}}
+  ]
+}

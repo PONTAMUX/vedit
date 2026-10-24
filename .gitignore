@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+work/
+*.cache/
+*.vedit.cache/
+*.log
+*.bak*

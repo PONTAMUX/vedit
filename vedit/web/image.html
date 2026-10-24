@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>vimg 画像編集</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/image.css">
+</head>
+<body class="img">
+<header id="top">
+  <b class="logo" title="vimg(ブイイメージ)">vimg <span class="dim">画像編集</span></b>
+  <span id="filemenu" hidden><button id="b-new" title="Ctrl+N : 新規作成(サイズを選ぶ)">新規</button><button id="b-open" title="Ctrl+O : ファイルを開く(.vimg.json / 画像)">開く</button><button id="b-saveas" title="Ctrl+Shift+S : 名前を付けて保存">名前を付けて保存</button></span>
+  <span id="pname"></span>
+  <span class="sp"></span>
+  <span id="savestate">保存済み</span>
+  <button id="b-undo" title="Ctrl+Z">元に戻す</button>
+  <button id="b-redo" title="Ctrl+Shift+Z">やり直す</button>
+  <button id="b-save" class="primary" title="Ctrl+S : 編集データ(.vimg.json)と透過PNGを保存">保存</button>
+</header>
+<div id="opts"></div>
+<main id="imain">
+  <nav id="tools">
+    <button data-tool="move" title="V : 移動・変形">✥</button>
+    <button data-tool="text" title="T : 文字(クリックで新規 / 文字をクリックで編集)">T</button>
+    <button data-tool="shape" title="U : 図形(ドラッグで描く)">▭</button>
+    <button data-tool="crop" title="C : 切り抜き(ドラッグで範囲 → Enter)">⌗</button>
+    <button data-tool="hand" title="H : 手のひら(Space+ドラッグでも)">✋</button>
+  </nav>
+  <section id="vp">
+    <canvas id="cv"></canvas>
+    <canvas id="ov"></canvas>
+    <textarea id="tedit" hidden spellcheck="false"></textarea>
+    <div id="drop" hidden>ここに画像をドロップ</div>
+  </section>
+  <section id="side" class="panel">
+    <div id="props" class="tabbody"></div>
+    <div id="layhd"><b>レイヤー</b><span class="sp"></span>
+      <button id="l-text" title="テキストレイヤーを追加">T</button><button id="l-shape" title="図形レイヤーを追加">▭</button><button id="l-img" title="画像を追加(ドラッグ&ドロップ・Ctrl+V でも)">🖼</button>
+      <button id="l-dup" title="Ctrl+J : 複製">⧉</button><button id="l-del" title="Delete : 削除">🗑</button>
+    </div>
+    <div id="layers"></div>
+  </section>
+</main>
+<footer id="status"><span id="st-zoom"></span><span id="st-size"></span><span id="st-pos"></span><span class="sp"></span><span class="dim">Space+ドラッグ=移動 / Alt+ホイール=拡大縮小 / Ctrl+0=全体表示 / ダブルクリック=文字を編集</span></footer>
+<div id="toast" hidden></div>
+<div id="modal" hidden><div id="modalbox"></div></div>
+<script>window.TOKEN = "__TOKEN__";</script>
+<script src="/static/image.js"></script>
+</body>
+</html>

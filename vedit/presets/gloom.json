@@ -1,0 +1,17 @@
+{
+  "doc": "ズーン: 画面を暗くして上から縦線(gloom)+ 落ち込む音。フラッシュ・衝撃音は無し。text / file を渡すと pop で出す",
+  "params": {
+    "text": null, "file": null, "gap_at": null,
+    "style": "impact", "pos": [0.5, 0.5], "track": 6, "gloom_track": 3, "fade": 0.3,
+    "se": "se/落ち込む.mp3", "se_gain": "match:ぽペン"
+  },
+  "styles": {
+    "impact": {"font": "HGP明朝E", "size": 200, "color": "#E0201C", "outlines": [{"color": "#000000", "width": 17}, {"color": "#FFFFFF", "width": 6}]}
+  },
+  "items": [
+    {"to": "overlays", "item": {"kind": "gloom", "start": "$start", "end": "$end", "gap_at": "$gap_at", "track": "$gloom_track", "in_anim": {"type": "fade", "dur": "$fade"}, "out_anim": {"type": "fade", "dur": "$fade"}}},
+    {"to": "telops", "if": "text", "item": {"text": "$text", "start": "$start", "end": "$end", "gap_at": "$gap_at", "style": "$style", "pos": "$pos", "in_anim": "pop"}},
+    {"to": "overlays", "if": "file", "item": {"file": "$file", "start": "$start", "end": "$end", "gap_at": "$gap_at", "pos": "full", "track": "$track", "in_anim": "pop"}},
+    {"to": "sfx", "if": "se", "item": {"file": "$se", "start": "$start", "gap_at": "$gap_at", "gain_db": "$se_gain"}}
+  ]
+}

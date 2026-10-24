@@ -1,0 +1,19 @@
+{
+  "doc": "章の頭: 空白(gaps)の前後に wipe-diag + シーン切り替えの音、空白の中に章の絵(file)か文字(text)+ 和太鼓。overlays に {\"preset\": \"chapter\", \"gap_at\": 空白の時刻, \"start\": 0, \"end\": 空白の長さ, \"text\": \"其の一\n数字で見る…\"} と書く",
+  "required": ["gap_at"],
+  "params": {
+    "text": null, "file": null, "gap_at": null,
+    "style": "chapter", "pos": [0.5, 0.5], "track": 6,
+    "wipe": "wipe-diag", "wipe_se": "se/シーン切り替え2.mp3", "wipe_gain": "match:ぽペン-3",
+    "se": "se/和太鼓でドン.mp3", "se_gain": "match:ぽペン"
+  },
+  "styles": {
+    "chapter": {"font": "HGP創英角ｺﾞｼｯｸUB", "size": 130, "color": "#FFFFFF", "outlines": [{"color": "#E0201C", "width": 8}, {"color": "#000000", "width": 4}]}
+  },
+  "items": [
+    {"to": "transitions", "if": "wipe", "item": {"gap": "$gap_at", "type": "$wipe", "se": {"file": "$wipe_se", "gain_db": "$wipe_gain"}}},
+    {"to": "overlays", "if": "file", "item": {"file": "$file", "gap_at": "$gap_at", "start": "$start", "end": "$end", "pos": "full", "track": "$track"}},
+    {"to": "telops", "if": "text", "item": {"text": "$text", "gap_at": "$gap_at", "start": "$start", "end": "$end", "style": "$style", "pos": "$pos"}},
+    {"to": "sfx", "if": "se", "item": {"file": "$se", "gap_at": "$gap_at", "start": "$start", "end": "$end", "gain_db": "$se_gain"}}
+  ]
+}

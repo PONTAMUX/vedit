@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>V-edit</title>
+<link rel="icon" href="/static/icon.png">
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/meter.css">
+</head>
+<body>
+<header id="top">
+  <b class="logo"><img src="/static/icon.png" alt="">V-edit</b><span id="pname"></span>
+  <span class="sp"></span>
+  <span id="sysmon" title="CPU / GPU / メモリの使用率(2秒ごと)。GPU は NVIDIA のみ。VRAM = GPU のメモリ"></span>
+  <span id="savestate">保存済み</span>
+  <button id="b-saveas" title="Ctrl+Shift+S : プロジェクトを別名で保存(以後は新しいファイルを編集。元のファイルは残る)">別名で保存…</button>
+  <button id="b-undo" title="Ctrl+Z">元に戻す</button>
+  <button id="b-redo" title="Ctrl+Y">やり直す</button>
+  <button id="b-review" title="修正点の一覧(クリックでその所へ)と修正前の映像との比較">📝 修正点</button>
+  <button id="b-check" title="実際の書き出しと同じ描画で現在のコマを確認">仕上がり確認</button>
+  <button id="b-draft">低画質で書き出し</button>
+  <button id="b-export" class="primary">書き出し</button>
+</header>
+<div id="warn" hidden></div>
+<main>
+  <section id="left" class="panel">
+    <nav class="tabs" data-for="left"><a data-tab="media" class="on">素材</a><a data-tab="audio">音声</a><a data-tab="cut">カット</a></nav>
+    <div class="tabbody" id="left-body"></div>
+  </section>
+  <section id="monitor">
+    <div id="stagewrap"><div id="stage">
+      <video id="vid" playsinline preload="auto"></video><video id="vid2" playsinline preload="auto" muted style="visibility:hidden"></video>
+      <div id="ovlayer"></div><div id="tllayer"></div>
+      <div id="checkimg" hidden><img><button>×</button></div>
+    </div></div>
+    <div id="transport">
+      <button id="b-start" title="Home">⏮</button><button id="b-play" title="Space">▶</button><button id="b-end" title="End">⏭</button>
+      <span class="tcbox src" title="元素材の時刻。クリックで入力してジャンプ"><small>元素材</small><span id="tc" class="tcv">0:00.00</span><button class="tccp" data-for="tc" title="元素材の時刻をコピー">⧉</button></span>
+      <span class="tcbox out" title="カット後(仕上がり)の時刻。クリックで入力してジャンプ"><small>カット後</small><span id="tcout" class="tcv">0:00.00</span><small id="tctot"></small><button class="tccp" data-for="tcout" title="カット後の時刻をコピー">⧉</button></span>
+      <span class="sp"></span>
+      <label class="chk"><input type="checkbox" id="c-proc" checked>処理後の音で再生</label><button id="b-rawwarn" hidden title="処理済みの音が古い/無いため、元の録音(コンプ・音量補正なし)で再生しています。書き出しとは音量が違います。クリックで音声処理を実行">⚠ 元の音で再生中</button>
+      <button id="b-mute" title="M : ミュート">🔊</button><input type="range" id="vol" min="0" max="100" value="80" title="プレビュー音量(書き出しには影響しません)">
+    </div>
+  </section>
+  <section id="right" class="panel">
+    <nav class="tabs" data-for="right"><a data-tab="clip" class="on">クリップ</a><a data-tab="style">スタイル</a><a data-tab="history" title="操作の履歴(Premiere のヒストリー)。クリックでその時点に戻る">ヒストリー</a></nav>
+    <div class="tabbody" id="right-body"></div>
+  </section>
+  <section id="review" class="panel" hidden></section>
+</main>
+<section id="tl">
+  <div id="tltools">
+    <button id="t-razor" title="C : クリックで分割(Premiereのレーザー)">🔪 分割</button><button id="t-snap" class="on" title="S : スナップ(端や再生ヘッドに吸着)">🧲 スナップ</button><button id="t-collapse" class="on" title="カット部分を詰めて表示(Premiere同様)/ 元素材の時間軸で表示">⇥ カット詰め</button><button id="t-tool" title="Shift+C : ドラッグでカット範囲を作る">✂ 範囲カット</button>
+    <button id="t-in" title="I">イン</button><button id="t-out" title="O">アウト</button>
+    <button id="t-x" title="X : イン〜アウトをカット">範囲をカット</button>
+    <span class="sp"></span>
+    <button id="t-addt" title="T">+ テロップ</button><button id="t-addb" title="B">+ トピック</button><button id="t-addo">+ 差し込み</button><button id="t-adds" title="効果音(SE)を再生ヘッドの位置に置く">+ 効果音</button><button id="b-ps" title="画像編集(軽量 Photoshop)で画像・テロップ画像を作る/直す(保存すると自動で反映)">🎨 画像編集</button>
+    <span class="sp"></span>
+    <span class="dim">拡大</span><input type="range" id="zoom" min="0" max="100" value="40">
+  </div>
+  <div id="tlrow">
+  <div id="tlgrid">
+    <div id="labels"></div>
+    <div id="scroller"><div id="inner"></div></div>
+  </div>
+  <div id="vscroll" title="トラックを上下に送る(つまみをドラッグ / 空いた所をクリックで1画面 / ホイール)"><i id="vthumb"></i></div>
+  <div id="meter" title="オーディオメーター(dBFS・L/R)。プレビュー音量は差し引いた書き出し相当の値。上の赤ランプ=0dB超え(クリップ)。クリックでピークホールド/クリップをリセット">
+    <div class="vm-clips"><i id="vm-clip-l"></i><i id="vm-clip-r"></i></div>
+    <canvas></canvas>
+    <div class="vm-num"><span><b>P</b><span id="vm-pk">-∞</span></span><span><b>R</b><span id="vm-rms">-∞</span></span></div>
+  </div>
+  </div>
+</section>
+<div id="modal" hidden><div id="modalbox"></div></div>
+<div id="toast" hidden></div>
+<audio id="aud" preload="auto"></audio><audio id="bgm" preload="auto" loop></audio>
+<script>window.TOKEN = "__TOKEN__";</script>
+<script src="/static/review.js"></script>
+<script src="/static/app.js"></script>
+<script src="/static/meter.js"></script>
+</body>
+</html>

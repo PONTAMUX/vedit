@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "source": "src.mp4",
+  "timebase": "source",
+  "audio": {
+    "chain": [
+      {
+        "type": "gain",
+        "db": 18
+      },
+      {
+        "type": "normalize",
+        "peak_db": -3
+      }
+    ]
+  },
+  "cuts": [
+    [
+      4.2,
+      5.65
+    ]
+  ],
+  "telops": [
+    {
+      "start": 0.5,
+      "end": 3.0,
+      "text": "こんにちは、テロップです"
+    },
+    {
+      "start": 4.0,
+      "end": 7.0,
+      "text": "二つ目\\n改行あり"
+    }
+  ],
+  "topics": [
+    {
+      "start": 0.0,
+      "end": 8.0,
+      "text": "トピック：自己紹介"
+    }
+  ],
+  "overlays": [
+    {
+      "file": "ins.mp4",
+      "start": 5.0,
+      "end": 7.5,
+      "pos": "top-right",
+      "scale": 0.3
+    }
+  ],
+  "bgm": {
+    "file": "bgm.mp3",
+    "volume_db": -23.5,
+    "duck": true
+  },
+  "styles": {},
+  "output": {
+    "file": "out/final.mp4",
+    "fps": null
+  }
+}
